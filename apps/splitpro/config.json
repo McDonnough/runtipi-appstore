@@ -9,7 +9,7 @@
         "utilities"
     ],
     "description": "SplitPro is a self-hosted application for sharing and settling expenses.",
-    "tipi_version": 2,
+    "tipi_version": 5,
     "version": "latest",
     "source": "https://github.com/oss-apps/split-pro",
     "website": "https://splitpro.app",
