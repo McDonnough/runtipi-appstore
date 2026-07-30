@@ -34,7 +34,7 @@
         },
         {
           "key": "NEXTAUTH_URL",
-          "value": "${APP_PROTOCOL}://${APP_DOMAIN}"
+          "value": "${SPLITPRO_PUBLIC_URL}"
         },
         {
           "key": "NEXTAUTH_URL_INTERNAL",
