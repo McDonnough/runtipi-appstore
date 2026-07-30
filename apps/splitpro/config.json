@@ -43,7 +43,7 @@
             "min": 10,
             "max": 512,
             "env_variable": "SPLITPRO_PUBLIC_URL"
-        }
+        },
         {
             "type": "text",
             "label": "Authentik client ID",
