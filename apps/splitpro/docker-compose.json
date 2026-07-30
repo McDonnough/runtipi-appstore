@@ -1,0 +1,126 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "splitpro",
+      "image": "ossapps/splitpro:latest",
+      "restart": "unless-stopped",
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/uploads",
+          "containerPath": "/app/uploads"
+        }
+      ],
+      "environment": [
+        {
+          "key": "PORT",
+          "value": "3000"
+        },
+        {
+          "key": "HOSTNAME",
+          "value": "0.0.0.0"
+        },
+        {
+          "key": "TZ",
+          "value": "${TZ}"
+        },
+        {
+          "key": "DATABASE_URL",
+          "value": "postgresql://splitpro:${SPLITPRO_DB_PASSWORD}@postgres:5432/splitpro"
+        },
+        {
+          "key": "NEXTAUTH_SECRET",
+          "value": "${SPLITPRO_NEXTAUTH_SECRET}"
+        },
+        {
+          "key": "NEXTAUTH_URL",
+          "value": "${APP_PROTOCOL}://${APP_DOMAIN}"
+        },
+        {
+          "key": "NEXTAUTH_URL_INTERNAL",
+          "value": "http://splitpro:3000"
+        },
+        {
+          "key": "AUTHENTIK_ID",
+          "value": "${SPLITPRO_AUTHENTIK_ID}"
+        },
+        {
+          "key": "AUTHENTIK_SECRET",
+          "value": "${SPLITPRO_AUTHENTIK_SECRET}"
+        },
+        {
+          "key": "AUTHENTIK_ISSUER",
+          "value": "${SPLITPRO_AUTHENTIK_ISSUER}"
+        },
+        {
+          "key": "DISABLE_EMAIL_SIGNUP",
+          "value": "true"
+        },
+        {
+          "key": "ENABLE_SENDING_INVITES",
+          "value": "false"
+        },
+        {
+          "key": "UPLOAD_MAX_FILE_SIZE_MB",
+          "value": "10"
+        }
+      ],
+      "dependsOn": {
+        "postgres": {
+          "condition": "service_healthy"
+        }
+      },
+      "isMain": true,
+      "internalPort": 3000
+    },
+    {
+      "name": "postgres",
+      "image": "ossapps/postgres:17.7-trixie",
+      "restart": "unless-stopped",
+      "command": [
+        "postgres",
+        "-c",
+        "shared_preload_libraries=pg_cron",
+        "-c",
+        "cron.database_name=splitpro",
+        "-c",
+        "cron.timezone=UTC"
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/postgres",
+          "containerPath": "/var/lib/postgresql/data"
+        }
+      ],
+      "environment": [
+        {
+          "key": "POSTGRES_USER",
+          "value": "splitpro"
+        },
+        {
+          "key": "POSTGRES_PASSWORD",
+          "value": "${SPLITPRO_DB_PASSWORD}"
+        },
+        {
+          "key": "POSTGRES_DB",
+          "value": "splitpro"
+        },
+        {
+          "key": "POSTGRES_PORT",
+          "value": "5432"
+        },
+        {
+          "key": "TZ",
+          "value": "${TZ}"
+        }
+      ],
+      "healthCheck": {
+        "test": "pg_isready -U splitpro -d splitpro",
+        "interval": "10s",
+        "timeout": "5s",
+        "retries": 5,
+        "startPeriod": "20s"
+      }
+    }
+  ]
+}

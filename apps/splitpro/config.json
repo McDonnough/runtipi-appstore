@@ -1,0 +1,55 @@
+{
+  "name": "SplitPro",
+  "id": "splitpro",
+  "available": true,
+  "short_desc": "Self-hosted expense sharing.",
+  "author": "oss-apps",
+  "port": 3020,
+  "categories": [
+    "utilities"
+  ],
+  "description": "SplitPro is a self-hosted application for sharing and settling expenses.",
+  "tipi_version": 1,
+  "version": "latest",
+  "source": "https://github.com/oss-apps/split-pro",
+  "website": "https://splitpro.app",
+  "exposable": true,
+  "force_expose": true,
+  "supported_architectures": [
+    "amd64",
+    "arm64"
+  ],
+  "form_fields": [
+    {
+      "type": "random",
+      "label": "Database password",
+      "required": true,
+      "env_variable": "SPLITPRO_DB_PASSWORD"
+    },
+    {
+      "type": "random",
+      "label": "NextAuth secret",
+      "required": true,
+      "env_variable": "SPLITPRO_NEXTAUTH_SECRET"
+    },
+    {
+      "type": "text",
+      "label": "Authentik client ID",
+      "required": true,
+      "env_variable": "SPLITPRO_AUTHENTIK_ID"
+    },
+    {
+      "type": "password",
+      "label": "Authentik client secret",
+      "required": true,
+      "env_variable": "SPLITPRO_AUTHENTIK_SECRET"
+    },
+    {
+      "type": "text",
+      "label": "Authentik issuer URL",
+      "hint": "Example: https://auth.example.com/application/o/splitpro",
+      "required": true,
+      "env_variable": "SPLITPRO_AUTHENTIK_ISSUER"
+    }
+  ]
+}
