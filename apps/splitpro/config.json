@@ -9,7 +9,7 @@
         "utilities"
     ],
     "description": "SplitPro is a self-hosted application for sharing and settling expenses.",
-    "tipi_version": 1,
+    "tipi_version": 2,
     "version": "latest",
     "source": "https://github.com/oss-apps/split-pro",
     "website": "https://splitpro.app",
@@ -34,6 +34,16 @@
             "required": true,
             "env_variable": "SPLITPRO_NEXTAUTH_SECRET"
         },
+        {
+            "type": "text",
+            "label": "SplitPro public URL",
+            "hint": "Full URL configured in Caddy, without a trailing slash.",
+            "placeholder": "https://split.example.ch",
+            "required": true,
+            "min": 10,
+            "max": 512,
+            "env_variable": "SPLITPRO_PUBLIC_URL"
+        }
         {
             "type": "text",
             "label": "Authentik client ID",
